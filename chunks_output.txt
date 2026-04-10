@@ -1,0 +1,70 @@
+{
+  "chunks": [
+    {
+      "primary_topic": "Spiral Model",
+      "sub_topic": "Introduction",
+      "speaker": "Vishwari Shali",
+      "verbatim_text": "In today's session, we will discuss about the next important model that is spiral model. Let's start the session. In today's session, we will discuss about introduction phases, when to use spiral model and their advantages and disadvantages. Let's see all these points one by one."
+    },
+    {
+      "primary_topic": "Spiral Model",
+      "sub_topic": "Development",
+      "speaker": "Vishwari Shali",
+      "verbatim_text": "Now, the first point is what exactly spiral model? The spiral model initially developed by the scientist Bohem in 1986. Spiral model which is also called as meta model and spiral model generally used in large project and the project which have lots of risk and the problem."
+    },
+    {
+      "primary_topic": "Spiral Model",
+      "sub_topic": "Phases",
+      "speaker": "Vishwari Shali",
+      "verbatim_text": "That's why this spiral model is also called as risk driven software development process model. Spiral model is a combination of waterfall, iterative and prototyping model."
+    },
+    {
+      "primary_topic": "Spiral Model",
+      "sub_topic": "Phases (1)",
+      "speaker": "Vishwari Shali",
+      "verbatim_text": "Spiral model consists of four phases: Planning, Risk Analysis and Evaluation, Design and Development, and Plan-Do-Check-Act."
+    },
+    {
+      "primary_topic": "Spiral Model",
+      "sub_topic": "Planning Phase",
+      "speaker": "Vishwari Shali",
+      "verbatim_text": "During the Planning phase, goals and objectives are defined, project scope is established, alternative solutions are identified, and a tentative budget and schedule are developed."
+    },
+    {
+      "primary_topic": "Spiral Model",
+      "sub_topic": "Risk Analysis and Evaluation Phase",
+      "speaker": "Vishwari Shali",
+      "verbatim_text": "The Risk Analysis and Evaluation phase involves identifying potential risks, evaluating the probability and impact of each risk, and determining appropriate strategies to manage those risks."
+    },
+    {
+      "primary_topic": "Spiral Model",
+      "sub_topic": "Design and Development Phase",
+      "speaker": "Vishwari Shali",
+      "verbatim_text": "During the Design and Development phase, detailed designs are created, code is written, and prototypes are developed."
+    },
+    {
+      "primary_topic": "Spiral Model",
+      "sub_topic": "Plan-Do-Check-Act Phase",
+      "speaker": "Vishwari Shali",
+      "verbatim_text": "The Plan-Do-Check-Act phase involves implementing the plan, executing the work, checking the results against the objectives, and taking corrective actions as necessary."
+    },
+    {
+      "primary_topic": "Spiral Model",
+      "sub_topic": "When to use Spiral Model",
+      "speaker": "Vishwari Shali",
+      "verbatim_text": "The spiral model is best suited for projects that have high levels of uncertainty, complexity, and risk."
+    },
+    {
+      "primary_topic": "Spiral Model",
+      "sub_topic": "Advantages of Spiral Model",
+      "speaker": "Vishwari Shali",
+      "verbatim_text": "The advantages of the spiral model include its ability to manage risk, provide flexibility in design and development, allow for customer feedback throughout the project, and ensure quality through multiple iterations."
+    },
+    {
+      "primary_topic": "Spiral Model",
+      "sub_topic": "Disadvantages of Spiral Model",
+      "speaker": "Vishwari Shali",
+      "verbatim_text": "The disadvantages of the spiral model include its complexity, increased cost due to multiple iterations, and potential for delays if risks are not properly managed."
+    }
+  ]
+}

@@ -3,22 +3,36 @@ import ollama
 
 # 1. Define the System Prompt and JSON Schema
 system_prompt = """
-You are an expert educational content structurer. Your task is to analyze the provided raw lecture transcript and segment it into distinct, logical topics. 
+You are an expert educational content structurer. Your task is to analyze the provided raw lecture transcript and segment it into distinct, logical topics. Your goal is to create a structured JSON output that can be used for a Retrieval-Augmented Generation (RAG) system.
 
-Rules:
-1. Do not summarize or alter the original text. You must extract the exact, verbatim text from the transcript.
-2. Group the text logically based on the topic being discussed.
-3. Ignore and exclude pure filler sentences or off-topic technical checks (e.g., 'Can everyone hear me?', 'Let me grab some water').
-4. Ensure no individual chunk exceeds 300 words. Split longer topics into logical sub-parts (e.g., Part 1, Part 2).
-5. Output the result strictly as a JSON object matching this exact schema:
+**Core Rules:**
+1.  **Verbatim Extraction:** You MUST extract the text directly from the transcript. Do NOT summarize, rephrase, or generate new text. The `verbatim_text` field must be the exact text from the user's input.
+2.  **Logical Grouping:** Group the text into meaningful chunks based on the primary and sub-topics being discussed. A good chunk is self-contained and covers a specific point.
+3.  **No Filler:** Exclude conversational filler (e.g., "Good evening everyone," "Let's start the session," "Can you hear me?"). Focus on the core educational content.
+4.  **Chunk Size:** Aim for chunks between 100 and 300 words. This is a guideline; the most important thing is that the chunks are logically coherent.
+    *   If a topic is long, split it into logical sub-parts (e.g., "Spiral Model - Advantages", "Spiral Model - Disadvantages").
+    *   If a topic is very short, you may merge it with a closely related topic, but only if it makes logical sense.
+5.  **Speaker Attribution:** The speaker's name should be consistently extracted.
+6.  **Strict JSON Output:** The final output must be a single, valid JSON object that strictly follows the provided schema. Do not include any text or markdown outside of the JSON object.
 
+**Example of a good chunk:**
+```json
+{
+  "primary_topic": "Spiral Model",
+  "sub_topic": "Risk-Driven Nature",
+  "speaker": "Vishwari Shali",
+  "verbatim_text": "That's why this spiral model is also called as risk driven software development process model. Spiral model is a combination of waterfall, iterative and prototyping model. We already discussed these three models in detail in previous sessions. From waterfall model, it take a step by step development approach. From iterative model, it take a customer feedback taken approach and from prototyping model, it take first developed prototype and then actual development have started this kind of approach."
+}
+```
+
+**JSON Schema:**
 {
   "chunks": [
     {
-      "primary_topic": "string (e.g., 'Spiral Model')",
-      "sub_topic": "string (e.g., 'Introduction' or 'Disadvantages')",
-      "speaker": "string (e.g., 'Vishwari Shali')",
-      "verbatim_text": "string (the exact, cleaned text from the transcript)"
+      "primary_topic": "string (The main subject, e.g., 'Spiral Model')",
+      "sub_topic": "string (A specific aspect of the main subject, e.g., 'Phases' or 'Advantages')",
+      "speaker": "string (The person speaking, e.g., 'Vishwari Shali')",
+      "verbatim_text": "string (The exact, verbatim text from the transcript for this specific topic)"
     }
   ]
 }
@@ -64,6 +78,13 @@ if __name__ == "__main__":
     if structured_data and "chunks" in structured_data:
         print("\n=== SUCCESS: CHUNKS EXTRACTED ===\n")
         
+        # Save the output to a file
+        output_filename = "chunks_output.txt"
+        with open(output_filename, 'w') as f:
+            json.dump(structured_data, f, indent=2)
+        
+        print(f"Successfully saved structured data to {output_filename}")
+
         for i, chunk in enumerate(structured_data["chunks"]):
             print(f"Chunk {i+1}:")
             print(f"  Topic: {chunk.get('primary_topic')} -> {chunk.get('sub_topic')}")
