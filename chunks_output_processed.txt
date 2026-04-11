@@ -2,13 +2,13 @@
   "chunks": [
     {
       "primary_topic": "Spiral Model",
-      "sub_topic": "Introduction and Overview",
+      "sub_topic": "Introduction",
       "speaker": "Vishwari Shali",
       "verbatim_text": "Good evening everyone, this is Vishwari Shali. In previous sessions, we discussed about software development life cycle and different software models with examples. I have mentioned complete software engineering subject playlist link in below description box. Now, in today's session, we will discuss about the next important model that is spiral model. Let's start the session. In today's session, we will discuss about introduction phases, when to use spiral model and their advantages and disadvantages. Let's see all these points one by one. Now, the first point is what exactly spiral model? The spiral model initially developed by the scientist Bohem in 1986. Spiral model which is also called as meta model and spiral model generally used in large project and the project which have lots of risk and the problem. This is a main area where spiral model have used. That's why this spiral model is also called as risk driven software development process model. Spiral model is a combination of waterfall, iterative and prototyping model. We already discussed these three models in detail in previous sessions."
     },
     {
       "primary_topic": "Spiral Model",
-      "sub_topic": "Structure and Iterations",
+      "sub_topic": "Structure Diagram",
       "speaker": "Vishwari Shali",
       "verbatim_text": "From waterfall model, it take a step by step development approach. From iterative model, it take a customer feedback taken approach and from prototyping model, it take first developed prototype and then actual development have started this kind of approach. Next spiral model generally used in different gaming industry. For online gaming, it required lots of customer interaction and lots of risk is there. Next in Microsoft and operating system versions. For example, Windows 7, Windows 8 and after that Windows 10, 11, so there is an incremental approach. This solve disadvantages and risk in previous approach from the next versions. So in this particular field, spiral model have used. See here, in this particular diagram, spiral model had divided into the four parts. First planning, second risk analysis, third engineering and execution and fourth one evaluation. Let discuss in detail. Now see here, this is an actual structure diagram of spiral model. Here, this particular line indicate a spiral or iterations and it start with this inner point."
     },
@@ -20,13 +20,13 @@
     },
     {
       "primary_topic": "Software Development Life Cycle",
-      "sub_topic": "Prototyping and Deployment",
+      "sub_topic": "Engineering and Execution",
       "speaker": "Vishwari Shali",
       "verbatim_text": "Next, they find out the solution for solving this kind of risk or the problem. So this solution is planned in risk mitigation strategy documentation. After that, they develop a prototype. So prototype also used for solving the risk before starting the actual development. First, they develop the prototype. Prototype adjust a replica of your actual software development. So here, they develop a prototype. Next. Developing a prototype, it move to next phase that is engineering and execution. So here, actual development have started. First, designer design the product as per the final prototype or the requirement. Developer perform actual coding, biusing different programming languages, tester perform, testing, biusing different testing methods. They check whether the project is related to the customer requirements or not. And last one, after design coding and testing, they deploy the product to the customer environment. So this is the third part. Now, after deploy, it move to next one that is customer evaluation. So in this fourth part, they take a feedback from customer."
     },
     {
       "primary_topic": "Spiral Model",
-      "sub_topic": "Iterations and Cost",
+      "sub_topic": "Iteration Process",
       "speaker": "Vishwari Shali",
       "verbatim_text": "And if customer want any changes, it move to next spiral iteration. Means it move to next one that is again planning, again risk analysis, again, engineering and execution and again, they take a evaluation. Means second spiral iteration is there. Again, they check if there are customer want any suggestions or customer have any needs. So they again move to planning, risk analysis, engineering and execution and evaluation in this way. Means if customer want any changes, it move to next spiral iteration. So the spiral iteration increases, means cost of the project increases. And spiral iteration, it just one iteration is there. Means after one iteration, customer doesn't want any changes. Customer are satisfied. Means their project cost is less clear. So this is called a spiral model. Now, when to use spiral model. First, when the project is large and high project project is there, second here customer requirements are unclear and complex customer requirements. That's why customer requirements are continuously changing is there. The important thing is here risk evaluation is there."
     },
@@ -44,13 +44,13 @@
     },
     {
       "primary_topic": "Waterfall Model",
-      "sub_topic": "Introduction and Phases",
+      "sub_topic": "Introduction",
       "speaker": "Vishwari Shali",
       "verbatim_text": "Let's see all these points when by when next. Now the first thing is what exactly waterfall model see waterfall model introduced by Winston Royce in 1970. Waterfall model also called as linear sequential development model in your exam they will ask I'd are explain waterfall model or explain linear sequential development model. The answer is same. See here this is a structure of waterfall model waterfall model is a first software development life cycle model which is widely used in different software engineering projects as per the customer requirements. Now in this waterfall model there are total six phases like requirement analysis and planning than design development testing deployment and maintenance. This model is called as waterfall because see here their diagrammatic representation every cascading components show the waterfalls that's why this is called as waterfall model. Now the main aim of waterfall model is here in this model every phase is completed before the next phase can begin. Means first requirement analysis phase this phase completed then they send output to the design phase."
     },
     {
-      "primary_topic": "Waterfall Model",
-      "sub_topic": "When to Use",
+      "primary_topic": "Software Engineering",
+      "sub_topic": "Waterfall Model",
       "speaker": "Vishwari Shali",
       "verbatim_text": "Now design phase take a input of this and this phase send output to the development phase. Now development phase completed and send output to the testing phase means this waterfall model work only in forward direction not a backward direction. This is the main concept of waterfall model next now when to use waterfall model as we know in software engineering there are lots of and different models every model having their own requirements. So waterfall model mainly used in when customer requirement is fixed not change only that way this waterfall model will work. Now waterfall model is not used in complicated and big project it is used in short project and simple project in waterfall model all the tools and technology used in consistent means that is predefined you can't change these tools and technology in ongoing performance of waterfall model. Now waterfall model also having all the resources are well prepared and easily available. So only that way mainly requirements are fixed and used for short and simple project will be prepared next."
     },
@@ -61,7 +61,7 @@
       "verbatim_text": "Now these are the some phases of waterfall model the first phases requirement analysis every software project always start with the communication the communication between the customer and development team or communication between customers and stakeholders. Stakeholder means each and every person involved in particular software project whether it is customer client, tester, project manager, then developer so each and every person involved in software project which is called as stakeholders. So in requirement analysis there is a communication between them so they discuss what exactly customer want and what is the need of the customer means they gather all the requirements from the customer which includes functional requirements means suppose there is a online shopping application so functional requirements means what is the models will be included in particular software what will be the features and specification about software then performance misaccuracy and portability about software and interfacing means their graphical user front end interface."
     },
     {
-      "primary_topic": "Software Development Life Cycle",
+      "primary_topic": "Software Development Process",
       "sub_topic": "Design Phase",
       "speaker": "Vishwari Shali",
       "verbatim_text": "So these all requirements have collected in this particular phase after collecting requirements these requirements maintain in particular document this document are called as SRS that is software requirement specification this document having detailed description of what exactly customer want and requirements of the customer basically this SRS document is a contract between development team and the customer. Now next so after requirement analysis there is a design phase this SRS document send forward to the design phase design phase handled by the UI UX designer team so all the gather requirements are converted into the suitable design so this design are divided into the two parts like high level design and low level design so high level design include complete software architecture means how your project or how your products looks like in future so which includes algorithm like step by solution for example there is a sign up and login page so when you click on login which page will be open so this all design can be drawn in this design phase."
@@ -79,7 +79,7 @@
       "verbatim_text": "your software design is directly converted into the source code or programming languages so here developer decide the programming languages and database and the first develop a module by software for example in your project in your software there is a login module sign up module then a shopping cart module so they develop a complete project module by and after developing they perform the unit testing here unit testing means one by one they check the module whether it is properly developed or not so complete programming part done here next now next why is the testing phase so in testing phase tester perform all the testing activities and check that whether the particular software meet the customer requirements or not tester mainly perform integration testing here the test complete software at the same time whether it is particularly work or not if there are any errors the report those error and maintain test cases and test reports next now the last phase is deployment and maintenance phase here after completing complete software product this software product is released"
     },
     {
-      "primary_topic": "Software Development Life Cycle",
+      "primary_topic": "Software Development Methodologies",
       "sub_topic": "Waterfall Model Advantages",
       "speaker": "Vishwari Shali",
       "verbatim_text": "in market or delivered to the customer this is called as deployment and after delivering if there are any issue have occurred so this thing is called as maintenance so there are some support managers who fix those issues and enhance the product version if customer want any new features they enhance the customer product so these all things have included in maintenance phase now what was the advantages of waterfall model see we already discussed all these phases in detail previously so what exactly advantages of waterfall model first it is very simple and easy to understand the next thing is each phase must be completed see waterfall model going to only forward direction not a backward direction first unit to perform requirement analysis then design then implementation in this way they can't go backward and again change the requirement here requirements are fixed so it works very well in small project and requirements are fixed and understood right so here all the process and results all the things have documented properly clear next now main thing is what"

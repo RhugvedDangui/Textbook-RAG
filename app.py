@@ -8,6 +8,7 @@ Setup:
 """
 
 import os
+import json
 
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_chroma import Chroma
@@ -16,31 +17,26 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
 
-# ── ✏️  PUT YOUR SEARCH TOPIC HERE ───────────────────────────────────────────
-SEARCH_QUERY = "\"primary_topic\": \"Spiral Model\", \"sub_topic\": \"Introduction\", \"speaker\": \"Vishwari Shali\", \"verbatim_text\": \"In today's session, we will discuss about the next important model that is spiral model. Let's start the session. In today's session, we will discuss about introduction phases, when to use spiral model and their advantages and disadvantages. Let's see all these points one by one.\""
-# ─────────────────────────────────────────────────────────────────────────────
-
 # ── Configuration ─────────────────────────────────────────────────────────────
 
 CHROMA_DB_DIR = os.path.join(os.path.dirname(__file__), "chroma_db")
 EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
 COLLECTION_NAME = "textbook_rag"
 OLLAMA_MODEL = "mistral:latest"   # change to any model you have pulled, e.g. "mistral"
-TOP_K = 5                 # number of chunks to retrieve
+TOP_K = 3                 # number of chunks to retrieve per transcript section
+INPUT_CHUNKS_FILE = "chunks_output_processed.txt"
+OUTPUT_SUMMARY_FILE = "final_rag_summary.txt"
 
 SYSTEM_PROMPT = """\
-You are a helpful teaching assistant. Your role is to summarize and explain \
-the provided lecture transcript segment so students can understand and revise the topic.
+You are an expert teaching assistant. Your task is to summarize and explain a segment from a lecture transcript.
+You have been provided with excerpts from a textbook as context to help ensure your explanation is accurate and comprehensive.
 
-Use ONLY the lecture content provided in the context below. \
-If the context does not contain enough information to answer, say so clearly — do not add outside information.
+Use BOTH the lecture transcript segment AND the provided textbook context to write a rich, correct, and easy-to-understand summary.
+Use formatting (bullet points, short paragraphs) to make it readable.
 
-Provide a clear, well-structured summary. Use headings for the main topic and bullet points for key details.
-
-Context from the lecture:
+Textbook Context:
 {context}
 """
-
 
 # ── Load Vector Store ─────────────────────────────────────────────────────────
 
@@ -63,62 +59,81 @@ def get_vector_store() -> Chroma:
         collection_name=COLLECTION_NAME,
     )
 
+# ── Batch RAG Summarization ───────────────────────────────────────────────────
 
-# ── Search & Display ──────────────────────────────────────────────────────────
-
-def run(query: str) -> None:
-    print(f"\n🔍 Query: {query}\n")
-
-    db = get_vector_store()
-    retriever = db.as_retriever(search_type="similarity", search_kwargs={"k": TOP_K})
-    docs = retriever.invoke(query)
-
-    # ── Section 1: Raw textbook content ──────────────────────────────────────
-    print("━" * 70)
-    print("📖  TEXTBOOK CONTENT")
-    print("━" * 70)
-    for i, doc in enumerate(docs, 1):
+def format_docs(doc_list):
+    parts = []
+    for i, doc in enumerate(doc_list, 1):
         source = doc.metadata.get("source", "Unknown")
         page = doc.metadata.get("page", "?")
-        print(f"\n[{i}] {source}  |  Page {page}")
-        print("─" * 70)
-        print(doc.page_content.strip())
-    print()
+        parts.append(f"[Source {i}: {source}, Page {page}]\n{doc.page_content}")
+    return "\n\n---\n\n".join(parts)
 
-    # ── Section 2: LLM summary ───────────────────────────────────────────────
-    print("━" * 70)
-    print(f"🤖  AI SUMMARY  ({OLLAMA_MODEL})")
-    print("━" * 70)
-    print("⏳ Generating summary...\n")
+def run_rag_pipeline():
+    # 1. Load Chroma
+    print("Loading Vector Database...")
+    db = get_vector_store()
+    retriever = db.as_retriever(search_type="similarity", search_kwargs={"k": TOP_K})
 
+    # 2. Setup LLM Chain
     llm = ChatOllama(model=OLLAMA_MODEL, temperature=0.3)
     prompt = ChatPromptTemplate.from_messages([
         ("system", SYSTEM_PROMPT),
-        ("human", "Topic / Question: {question}\n\nSummarize this topic based on the textbook content above."),
+        ("human", "Lecture Topic: {topic}\n\nLecture Transcript Segment:\n{transcript}\n\nPlease provide the summarized notes for this section."),
     ])
 
-    def format_docs(doc_list):
-        parts = []
-        for i, doc in enumerate(doc_list, 1):
-            source = doc.metadata.get("source", "Unknown")
-            page = doc.metadata.get("page", "?")
-            parts.append(f"[Source {i}: {source}, Page {page}]\n{doc.page_content}")
-        return "\n\n---\n\n".join(parts)
-
     chain = (
-        {"context": lambda _: format_docs(docs), "question": RunnablePassthrough()}
-        | prompt
+        prompt
         | llm
         | StrOutputParser()
     )
 
-    answer = chain.invoke(query)
-    print(answer)
-    print("━" * 70)
+    # 3. Load the chunks
+    if not os.path.exists(INPUT_CHUNKS_FILE):
+        print(f"Error: {INPUT_CHUNKS_FILE} not found. Please run chunking first.")
+        return
 
+    with open(INPUT_CHUNKS_FILE, "r", encoding="utf-8") as f:
+        data = json.load(f)
+    
+    chunks = data.get("chunks", [])
+    if not chunks:
+        print("No chunks found in file.")
+        return
 
+    print(f"Found {len(chunks)} chunks. Beginning RAG-augmented sequential summarization...")
+    
+    final_output_parts = []
 
-# ── Main ──────────────────────────────────────────────────────────────────────
+    # 4. Process each chunk
+    for i, chunk in enumerate(chunks, 1):
+        topic = f"{chunk.get('primary_topic')} - {chunk.get('sub_topic')}"
+        transcript_text = chunk.get("verbatim_text", "")
+        
+        print(f"\n[{i}/{len(chunks)}] Processing: {topic}")
+        
+        # Retrieve context using the transcript text as the query
+        docs = retriever.invoke(transcript_text)
+        context_str = format_docs(docs)
+        
+        # Generate the summary
+        print(f"   Generating summary with {OLLAMA_MODEL}...")
+        answer = chain.invoke({
+            "context": context_str,
+            "topic": topic,
+            "transcript": transcript_text
+        })
+        
+        # Append to our final list
+        section_header = f"### Section {i}: {topic}\n"
+        final_output_parts.append(section_header + answer + "\n\n" + "-"*40 + "\n")
+
+    # 5. Write everything to final file
+    final_document = "\n".join(final_output_parts)
+    with open(OUTPUT_SUMMARY_FILE, "w", encoding="utf-8") as f:
+        f.write(final_document)
+        
+    print(f"\n✅ All chunks processed successfully! Full RAG summary saved to '{OUTPUT_SUMMARY_FILE}'")
 
 if __name__ == "__main__":
-    run(SEARCH_QUERY)
+    run_rag_pipeline()

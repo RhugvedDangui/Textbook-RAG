@@ -2,7 +2,6 @@ import json
 import nltk
 import re
 import ollama
-from chunk import raw_transcript
 
 # ─── CONFIGURATION ────────────────────────────────────────────────────────────────
 # Recommended model: llama3:8b is a great balance of speed and accuracy for this task.
@@ -117,6 +116,10 @@ def create_sentence_chunks(transcript: str, max_chunk_size: int):
 if __name__ == "__main__":
     
     print("Starting transcript processing...")
+    # Read the transcript text directly from our newly created file
+    with open("transcript.txt", "r", encoding="utf-8") as f:
+        raw_transcript = f.read()
+
     # 1. Split transcript into sentence groups
     text_chunks = create_sentence_chunks(raw_transcript, MAX_CHUNK_SIZE_WORDS)
     
